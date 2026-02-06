@@ -22,7 +22,6 @@
             font-family: 'Georgia', serif;
         }
 
-        /* Background spotlight */
         .bg {
             position: absolute;
             width: 100%;
@@ -31,7 +30,6 @@
             z-index: 1;
         }
 
-        /* The Box that keeps everything centered */
         .center-box {
             position: relative;
             z-index: 2;
@@ -43,12 +41,10 @@
             height: 100%;
         }
 
-        /* The Rose Container */
         .rose {
             position: relative;
             width: 100px;
             height: 100px;
-            /* Shifting the whole rose slightly up so the stem has room */
             margin-bottom: 150px; 
         }
 
@@ -56,6 +52,8 @@
             position: absolute;
             width: 100px;
             height: 100px;
+            /* Shifted left slightly by 10px */
+            left: -10px; 
             transform: scale(0);
             animation: bloom 2s 2s cubic-bezier(0.17, 0.88, 0.32, 1.27) forwards;
             z-index: 10;
@@ -83,7 +81,6 @@
             to { transform: scale(1.4); }
         }
 
-        /* The Stem */
         .stem {
             position: absolute;
             top: 85px;
@@ -101,7 +98,6 @@
             to { height: 220px; }
         }
 
-        /* The Message */
         .message {
             position: absolute;
             bottom: 12%;
@@ -119,7 +115,6 @@
             to { opacity: 1; }
         }
 
-        /* Twinkling Stars */
         .star {
             position: absolute;
             background: white;
