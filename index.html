@@ -3,144 +3,186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>For My Girl</title>
+    <title>For My Everything</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --rose-red: #ff0033;
+            --rose-dark: #990022;
+            --stem-green: #2d5a27;
         }
 
-        body {
-            background-color: #0f0f0f;
+        body, html {
+            height: 100%;
+            margin: 0;
+            background: radial-gradient(circle at center, #1a0505 0%, #000000 100%);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
             overflow: hidden;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Georgia', serif;
         }
 
-        .canvas {
-            position: relative;
+        /* Sparkle effect container */
+        #sparkles {
+            position: absolute;
             width: 100%;
-            height: 60vh;
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .flower {
+            position: relative;
+            transform: scale(0.9);
         }
 
         /* The Stem */
         .stem {
-            position: relative;
             width: 6px;
-            background: linear-gradient(to bottom, #3a7d44, #1b3d21);
-            border-radius: 10px;
             height: 0;
-            animation: grow-stem 2.5s ease-out forwards;
+            background: linear-gradient(to bottom, var(--stem-green), #112b0f);
+            border-radius: 10px;
+            animation: grow-stem 3s ease-in-out forwards;
+            position: relative;
         }
 
         @keyframes grow-stem {
-            to { height: 250px; }
+            to { height: 280px; }
         }
 
-        /* The Rose Head */
-        .rose-head {
+        /* The Rose Petals - Layered for depth */
+        .rose-petals {
             position: absolute;
-            bottom: 250px;
-            width: 50px;
-            height: 50px;
-            opacity: 0;
-            transform: scale(0.2);
-            animation: bloom 1.5s 2.5s ease-out forwards;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%) scale(0);
+            animation: bloom 2s 2.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
 
         .petal {
             position: absolute;
-            background: radial-gradient(circle, #ff1a1a, #990000);
-            width: 45px;
-            height: 70px;
-            border-radius: 50% 50% 10% 10%;
+            background: radial-gradient(circle at 30% 30%, var(--rose-red), var(--rose-dark));
+            width: 50px;
+            height: 80px;
+            border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+            box-shadow: 0 0 20px rgba(255, 0, 51, 0.3);
             transform-origin: bottom center;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
         }
 
-        .petal:nth-child(1) { transform: rotate(0deg); }
-        .petal:nth-child(2) { transform: rotate(45deg); }
-        .petal:nth-child(3) { transform: rotate(-45deg); }
-        .petal:nth-child(4) { transform: rotate(90deg); }
-        .petal:nth-child(5) { transform: rotate(-90deg); }
+        /* Realistic petal layering */
+        .petal.center { width: 30px; height: 50px; z-index: 5; background: var(--rose-dark); top: 15px; }
+        .p1 { transform: rotate(0deg); }
+        .p2 { transform: rotate(60deg); }
+        .p3 { transform: rotate(120deg); }
+        .p4 { transform: rotate(180deg); }
+        .p5 { transform: rotate(240deg); }
+        .p6 { transform: rotate(300deg); }
 
         @keyframes bloom {
-            to { 
-                opacity: 1; 
-                transform: scale(1);
-            }
+            to { transform: translateX(-50%) scale(1.3); }
         }
 
-        /* Leaves */
+        /* Leaves with a soft pulse */
         .leaf {
             position: absolute;
-            width: 30px;
-            height: 15px;
-            background: #2d5a27;
-            border-radius: 20px 0 20px 0;
+            width: 40px;
+            height: 20px;
+            background: var(--stem-green);
+            border-radius: 0 50% 0 50%;
             opacity: 0;
-            animation: leaf-pop 1s 2s ease-out forwards;
+            animation: leaf-fade 1s 2s forwards;
         }
+        .left { left: -40px; top: 100px; transform: rotate(-30deg); }
+        .right { right: -40px; top: 150px; transform: rotate(150deg); }
 
-        .leaf.left { left: -25px; top: 100px; transform: rotate(-30deg); }
-        .leaf.right { right: -25px; top: 140px; transform: rotate(150deg); }
+        @keyframes leaf-fade { to { opacity: 1; } }
 
-        @keyframes leaf-pop {
-            to { opacity: 1; }
-        }
-
-        /* Responsive Text */
-        .message-container {
-            padding: 20px;
+        /* The Message */
+        .text-box {
+            margin-top: 40px;
             text-align: center;
-            width: 90%;
+            z-index: 10;
         }
 
-        .message {
-            color: #ff9a9a;
-            font-size: 1.2rem;
-            font-weight: 300;
-            letter-spacing: 1px;
-            line-height: 1.5;
+        .text {
+            color: #ffcccc;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(255, 150, 150, 0.5);
             opacity: 0;
-            animation: fade-in 2s 4s forwards;
+            animation: fade-up 2s 4.5s forwards;
         }
 
-        @keyframes fade-in {
-            to { opacity: 1; }
+        @keyframes fade-up {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Sparkle animation */
+        .sparkle {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+            animation: sparkle-anim 2s infinite;
+        }
+
+        @keyframes sparkle-anim {
+            0% { transform: scale(0); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: scale(1.5); opacity: 0; }
         }
     </style>
 </head>
 <body>
 
-    <div class="canvas">
+    <div id="sparkles"></div>
+
+    <div class="flower">
+        <div class="rose-petals">
+            <div class="petal p1"></div>
+            <div class="petal p2"></div>
+            <div class="petal p3"></div>
+            <div class="petal p4"></div>
+            <div class="petal p5"></div>
+            <div class="petal p6"></div>
+            <div class="petal center"></div>
+        </div>
         <div class="stem">
-            <div class="rose-head">
-                <div class="petal"></div>
-                <div class="petal"></div>
-                <div class="petal"></div>
-                <div class="petal"></div>
-                <div class="petal"></div>
-            </div>
             <div class="leaf left"></div>
             <div class="leaf right"></div>
         </div>
     </div>
 
-    <div class="message-container">
-        <div class="message">
-            A rose that will never wither,<br>
-            just like my love for you.
-        </div>
+    <div class="text-box">
+        <p class="text">A ROSE FOR THE GIRL<br>WHO OWNS MY HEART.</p>
     </div>
 
+    <script>
+        // Create random sparkles after the rose blooms
+        function createSparkle() {
+            const container = document.getElementById('sparkles');
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            
+            const size = Math.random() * 4 + 2 + 'px';
+            sparkle.style.width = size;
+            sparkle.style.height = size;
+            
+            sparkle.style.left = Math.random() * 100 + '%';
+            sparkle.style.top = Math.random() * 100 + '%';
+            
+            container.appendChild(sparkle);
+            
+            setTimeout(() => {
+                sparkle.remove();
+            }, 2000);
+        }
+
+        // Start sparkling after rose starts blooming
+        setTimeout(() => {
+            setInterval(createSparkle, 150);
+        }, 3000);
+    </script>
 </body>
 </html>
